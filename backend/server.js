@@ -11,6 +11,24 @@ const cheerio = require('cheerio');
 const app = express();
 app.use(express.json());
 app.use(cors());
+const allowedOrigins = [
+  "https://questify-fawn.vercel.app", 
+  "http://localhost:3000"     
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET, POST, PUT, DELETE",
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
