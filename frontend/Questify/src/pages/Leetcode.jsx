@@ -13,7 +13,7 @@ function App() {
     setIsLoading(true);
     
     try {
-      const response = await axios.post("http://localhost:3000/store-email", { 
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/store-email`, { 
         email, 
         platform: "LeetCode" 
       });
